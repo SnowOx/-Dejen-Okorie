@@ -20,7 +20,7 @@ def humanTurn():
     humanGuess = int(input('Please enter your guess! \n'))
 
     if humanGuess == hiddenCard:
-        print(f'CORRECT! You guessed the correct card, {hiddenCard}!')
+        print('CORRECT! You guessed the correct card, {}!'.format(hiddenCard))
         # Add exit element here ## Use return or dictionary?
         gameWinner[0] = 'You'
         gameStatus[0] = 'complete'
@@ -40,20 +40,25 @@ def computerMemoryChecker(computerGuess):
     countAll = 0
     checkAll = 0
         
-    if previousGuessesDict == True:             # Empty dictionary returns False
+    if previousGuessesDict:             
         for k, v in previousGuessesDict.items():
             countAll += 1                       # Counts each key value pair in the dictionary
-            if (v == 'higher' and computerGuess > k or v == 'lower' and computerGuess < k):
+            if (v == 'higher' and computerGuess > k or v == 'lower') and (computerGuess < k): 
                 checkAll += 1
             else:
                 pass                        # Does not add 1 if the checkingCounter check is unsucessful. computerTurn() should then re-loop and guess a new number
-        print('checkAll = ' + checkAll)
+
+        print('This line checks checkAll. checkAll = ' + str(checkAll))         # Bug hunter
+
         if countAll == checkAll:
             guessChecker[0] = 'success'
+            print(guessChecker[0])                  # Bug hunter
         elif countAll != checkAll:
-            guessChecker[0] = 'failure' 
-                        
-    elif previousGuessesDict != True:          # Empty dictionary returns False
+            guessChecker[0] = 'failure'             # Bug hunter
+            print(guessChecker[0])
+           
+    elif previousGuessesDict == False:          
+        print('previousGuessesDict != True:')       # Bug hunter
         pass
 
 def computerTurn():
@@ -61,7 +66,7 @@ def computerTurn():
         computerGuess = random.randint(1,52)
         computerMemoryChecker(computerGuess)
 
-        if guessChecker[0] != 'success':                  ####! Tricky section here. The computer is stuck on these four lines
+        if guessChecker[0] == 'failure':                  ####! Tricky section here. The computer is stuck on these four lines
             continue
         else:
             pass
@@ -74,10 +79,10 @@ def computerTurn():
         else:
             break
 
-    print(f'The computer guessed {computerGuess}!')
+    print('The computer guessed {}!'.format(computerGuess))
     
     if computerGuess == hiddenCard:             # Check new guess against the hidden card
-        print(f'CORRECT! The computer guessed the correct card, {hiddenCard}!')
+        print('CORRECT! The computer guessed the correct card, {}!'.format(hiddenCard))
     # Exit elements below
         gameWinner[0] = 'The computer'
         gameStatus[0] = 'complete'
@@ -125,10 +130,5 @@ elif humanGuessFirst.lower() != 'yes':
         else:
             break
 
-print(f'Game complete. {gameWinner[0]} won the game!')
+print('Game complete. {} won the game!'.format(gameWinner[0]))
 print(previousGuessesDict, gameWinner, gameStatus) # Bug hunter
-
-
-
-
-
