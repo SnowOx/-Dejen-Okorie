@@ -1,0 +1,33 @@
+#! python3
+# tablePrinter2.py
+
+tableData = [['apples', 'oranges', 'cherries', 'banana'],
+             ['Alice', 'Bob', 'Carol', 'David'],
+             ['dogs', 'cats', 'moose', 'goose']]
+
+
+def printTable():
+    longestWidth = 0
+    for wordList in tableData:
+        for word in wordList:
+            if len(word) > longestWidth:
+                longestWidth = len(word)
+
+    columns = (len(tableData))
+    print(columns)
+    print(type(columns))
+
+    for wordList in tableData:
+        for i in range(len(wordList)):    
+            print(wordList[i].rjust(longestWidth), end='')
+            print(wordList[i].rjust(int(longestWidth*1.2)))
+
+   
+            
+
+
+        
+    #[print(y.rjust(longestWidth)) for x in tableData for y in x] # Nested list comprehension!
+            
+
+printTable()
