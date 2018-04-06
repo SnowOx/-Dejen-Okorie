@@ -5,6 +5,7 @@ tableData = [['apples', 'oranges', 'cherries', 'banana'],
              ['Alice', 'Bob', 'Carol', 'David'],
              ['dogs', 'cats', 'moose', 'goose']]
 
+print('Intial tableData contents: \n' + str(tableData) + '\n\n')
 
 def printTable():
 
@@ -14,16 +15,18 @@ def printTable():
         for word in wordList:
             if len(word) > longestWidth:
                 longestWidth = len(word)
-    print('tableData length = ', str(len(tableData)))
+
+    tableDataLength = len(tableData)
+    print('tableData length = ', str(tableDataLength))
 
     # Transpose the rows and colums
     transposed = []
-    for i in range(0, len(tableData)):
+    for i in range(0, (len(tableData)+1)):
         transposed.append([row[i] for row in tableData])
             
     # Print the newly ordered list with rjust spacing
     colWidth = (longestWidth + 1)
-    for i in range(0, len(tableData)):
+    for i in range(len(transposed)):    
         line = transposed[i]
         for word in line:
             spacing = colWidth 
