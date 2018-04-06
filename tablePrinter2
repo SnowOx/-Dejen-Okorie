@@ -1,5 +1,5 @@
 #! python3
-# tablePrinter2.py - #Attempt 4. Success :)
+# tablePrinter2.py - # Attempt 4. Success :)
 
 tableData = [['apples', 'oranges', 'cherries', 'banana'],
              ['Alice', 'Bob', 'Carol', 'David'],
