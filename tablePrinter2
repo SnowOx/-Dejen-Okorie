@@ -1,5 +1,5 @@
 #! python3
-# tablePrinter2.py
+# tablePrinter2.py - #Attempt 4. Success :)
 
 tableData = [['apples', 'oranges', 'cherries', 'banana'],
              ['Alice', 'Bob', 'Carol', 'David'],
@@ -7,27 +7,30 @@ tableData = [['apples', 'oranges', 'cherries', 'banana'],
 
 
 def printTable():
+
+    # Find the longest word. This will be used for calculating the appropriate spacing
     longestWidth = 0
     for wordList in tableData:
         for word in wordList:
             if len(word) > longestWidth:
                 longestWidth = len(word)
+    print('tableData length = ', str(len(tableData)))
 
-    columns = (len(tableData))
-    print(columns)
-    print(type(columns))
-
-    for wordList in tableData:
-        for i in range(len(wordList)):    
-            print(wordList[i].rjust(longestWidth), end='')
-            print(wordList[i].rjust(int(longestWidth*1.2)))
-
-   
+    # Transpose the rows and colums
+    transposed = []
+    for i in range(0, len(tableData)):
+        transposed.append([row[i] for row in tableData])
             
-
-
-        
-    #[print(y.rjust(longestWidth)) for x in tableData for y in x] # Nested list comprehension!
-            
+    # Print the newly ordered list with rjust spacing
+    colWidth = (longestWidth + 1)
+    for i in range(0, len(tableData)):
+        line = transposed[i]
+        for word in line:
+            spacing = colWidth 
+            print(word.rjust(spacing), end='')
+        print()
 
 printTable()
+
+
+# Solved! This was a highly enjoyable challenge.
