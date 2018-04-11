@@ -39,13 +39,15 @@ for i in range(len(splitText2)):
         else:
             pass
         
-# Split text again to remove the floating punctuation
-rejoined1 = ' '.join(splitText2)
-print(rejoined1)
-splitText3 = rejoined1.split()
-print(splitText3)
-print(' '.join(splitText3))
-writeFile.write(' '.join(splitText3))
+# Remove the floating punctuation in the splitText2 list
+for entry in splitText2:
+    if entry in punctuation_list:
+        print('Deleting ' + entry)
+        del entry
+
+
+print(' '.join(splitText2))
+writeFile.write(' '.join(splitText2))
 writeFile.close()   
     
-# Incomplete. Program currently overwrites full stops that are adjacent to the detected elements. Why is this not working?
+# Incomplete. Program currently overwrites full stops that are adjacent to the detected elements.
