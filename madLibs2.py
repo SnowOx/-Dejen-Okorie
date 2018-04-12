@@ -2,10 +2,7 @@
 # MadLibs2.py - Programs that reads in text files and lets the user add their own text
 # Could alter this program to create a method that separates each character (rather than each word as .split() does) in any string
 
-import datetime
-
 #filename = input('Please enter the filename, with its extension, \nfor the program to read: ')
-
 filename = 'madLibsInput.txt'  # For testing
 openFile = open(filename, 'r')
 readFile = openFile.read()
