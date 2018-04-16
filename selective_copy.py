@@ -10,7 +10,6 @@ import logging
 # OUTPUT_POSITION= input('Enter directory to copy files to')
 STARTING_POSITION = os.path.abspath(r'C:\Users\A\Downloads')
 OUTPUT_POSITION = os.path.abspath(r'C:\Users\A\Desktop\OutputFolder')
-logging.basicConfig(level=logging.DEBUG)
  
 def file_copier(file_name, file_source, file_destination):
     if file_name.endswith('.pdf') or file_name.endswith('.jpg'):
