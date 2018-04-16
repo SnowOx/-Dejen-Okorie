@@ -2,8 +2,7 @@
 # file_size_searcher
 
 import os
-
-starting_position = r'C:\'
+starting_position = r"C:\"
 
 def show_big_file_details(file):
     get_file_details(file)
