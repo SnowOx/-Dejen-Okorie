@@ -3,7 +3,7 @@
 
 import os
 
-starting_position = r‘c:\Users\A'
+starting_position = r'C:\'
 
 def show_big_file_details(file):
     get_file_details(file)
