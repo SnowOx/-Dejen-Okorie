@@ -2,14 +2,12 @@
 # file_size_searcher
 
 import os
-starting_position = r"C:\"
+starting_position = "C:\\"
 
 def show_big_file_details(file):
     get_file_details(file)
-    try:
-        print('%s -- %s MB') % (file_path, file_size)
-    except:
-        pass
+    print('%s -- %s MB') % (file_path, file_size)
+
     
 def  get_file_details(file):
     file_path = os.path.join(starting_position, file)
