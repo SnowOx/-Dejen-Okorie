@@ -1,0 +1,43 @@
+!# python3
+# gap_filler.py - program to correct gaps in file numbering
+
+import re
+import os
+
+folder = #
+
+def put_files_in_sorted_list(folder):
+sorted_file_list = []
+sorted_file_list = sorted([for filename in folder]):
+print(sorted_file_list)
+return sorted_file_list
+
+def get_list_of_ints(sorted_file_list):
+filename_int_list = []
+for filename in sorted_file_list:
+            filename_ digits_str = re.findall(r’\d+’, filename_base)
+            filename_ digits_int = int(filename_digits_str)
+	print(‘filename_ digits_int >> %s’) % (filename_ digits_int)
+
+def correct_sequence_numbering(input_list):
+	for i in range(len(input_list):
+		try:
+			input_list[i] = seed + i
+			print(input_list[i])
+		except: 
+			seed = input_list[0]
+			print(‘seed: %s’) % (seed)
+	 output_list = input_list
+	 print(‘Corrected list >> %s\n’) % (output_list)
+
+def replace_file_names(corrected_list):
+	[for filename in sorted_file_list] for elem in corrected_list:
+		print(‘Original filename %s’) % (filename)
+		file_with_corrected_numbers = re.sub(‘\d+’, filename, elem)
+		print(‘Filename >> %s after re.sub’ % (file_with_corrected_numbers)
+
+
+put_files_in_sorted_list(folder)
+get_list_of_ints(sorted_file_list)
+correct_sequence_numbering(filename_ digits_int)
+replace_file_names(output_list)
