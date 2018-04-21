@@ -4,10 +4,10 @@
 import re
 import os
 
-folder = 'C:\\Users\\A\Google Drive\\OP2\\TestFolder'
+DIRECTORY = 'C:\\Users\\A\Google Drive\\OP2\\TestFolder'
 
 def put_files_in_sorted_list(folder):
-    sorted_file_list = [filename for filename in os.listdir(folder)]
+    sorted_file_list = sorted(os.listdir(folder))
     print(sorted_file_list)
     return sorted_file_list
 
@@ -19,24 +19,21 @@ def get_list_of_ints(sorted_file_list):
     return filename_int_list
 
 def get_correct_sequence_numbering(input_list):
-    for i in range(len(input_list)):
-        try:
-            input_list[i] = seed + i
-            print(input_list[i])
-        except: 
-            seed = input_list[0]
-            print('seed: ' + str(seed))
-        correct_sequence_list = input_list
-        print('Corrected list >> \n' + str(correct_sequence_list))
+    seed = input_list[0]
+    print('seed: ' + str(seed))
+    for i in range(1, len(input_list)):      # Enumerate
+        input_list[i] = seed + i
+        print(input_list[i])
+    print('Corrected list >> \n' + str(input_list))
+    return input_list
 
 def replace_file_names(correct_sequence_list):
-    for f, e in zip(sorted_file_list, correct_sequence_list):
-        print('Original filename %s') % (f)
-        file_with_corrected_numbers = re.sub('\d+', f, e)
+    for filename, elem in zip(sorted_file_list, correct_sequence_list):
+        print('Original filename %s') % (filename)
+        filename_with_corrected_numbers = re.sub('\d+', filename, elem)
         print('Filename >> %s after re.sub') % (file_with_corrected_numbers)
 
-put_files_in_sorted_list(folder)
-sorted_file_list = [filename for filename in os.listdir(folder)]
-get_list_of_ints(sorted_file_list)
-get_correct_sequence_numbering(filename_int_list)
+sorted_file_list = put_files_in_sorted_list(DIRECTORY)
+filename_int_list = get_list_of_ints(sorted_file_list)
+correct_sequence_list = get_correct_sequence_numbering(filename_int_list)
 replace_file_names(correct_sequence_list)
