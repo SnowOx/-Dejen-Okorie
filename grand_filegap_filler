@@ -5,11 +5,14 @@ import re
 import os
 
 DIRECTORY = 'C:\\Users\\A\Google Drive\\OP2\\TestFolder'
+#DIRECTORY = '/Users/A/Google Drive/OP2'
+
+
 
 def put_files_in_sorted_list(folder):
-    sorted_file_list = sorted(os.listdir(folder))
-    print(sorted_file_list)
-    return sorted_file_list
+    sorted_filename_list = sorted(os.listdir(folder))
+    print(sorted_filename_list)
+    return sorted_filename_list
 
 def get_list_of_ints(sorted_file_list):
     sorted_file_str = ''.join(sorted_file_list)
@@ -18,22 +21,36 @@ def get_list_of_ints(sorted_file_list):
     print('filename_digits_int >> ' + str(filename_int_list))
     return filename_int_list
 
-def get_correct_sequence_numbering(input_list):
-    seed = input_list[0]
-    print('seed: ' + str(seed))
-    for i in range(1, len(input_list)):      # Enumerate
-        input_list[i] = seed + i
-        print(input_list[i])
-    print('Corrected list >> \n' + str(input_list))
-    return input_list
+def get_correct_sequence_numbering(filename_int_list):
+    corrected_values_after_enumerate = []
+    for counter, value in enumerate(filename_int_list, filename_int_list[0]):
+        print('counter >> ' + str(counter))
+        print('value >> ' + str(value))
+        if counter != value:
+            value = counter
+            corrected_values_after_enumerate.append(value)
+            print('Corrected value to %s' % (str(value)))
+        else:
+            corrected_values_after_enumerate.append(value)                       
+    print('corrected list after enumerate >> ' + str(corrected_values_after_enumerate))
+    return corrected_values_after_enumerate
+        
+def replace_file_names(sorted_file_list, corrected_values_after_enumerate):
+    updated_filename_list = []
+    for filename, element in zip(sorted_file_list, corrected_values_after_enumerate):
+        print('filename %s element %s' % (filename, str(element)))
+        #element_length = len(str(element))
+        updated_filename_list_entry = re.sub(r'(\d+)', str(element), filename)
+        print(updated_filename_list_entry)
+        updated_filename_list.append(updated_filename_list_entry)
+    return updated_filename_list
 
-def replace_file_names(correct_sequence_list):
-    for filename, elem in zip(sorted_file_list, correct_sequence_list):
-        print('Original filename %s') % (filename)
-        filename_with_corrected_numbers = re.sub('\d+', filename, elem)
-        print('Filename >> %s after re.sub') % (file_with_corrected_numbers)
 
-sorted_file_list = put_files_in_sorted_list(DIRECTORY)
-filename_int_list = get_list_of_ints(sorted_file_list)
-correct_sequence_list = get_correct_sequence_numbering(filename_int_list)
-replace_file_names(correct_sequence_list)
+#Todo: change actual file names
+
+sorted_filename_list = put_files_in_sorted_list(DIRECTORY)
+filename_int_list = get_list_of_ints(sorted_filename_list)
+corrected_values_after_enumerate = get_correct_sequence_numbering(filename_int_list)
+print(sorted_filename_list)
+updated_filename_list = replace_file_names(sorted_filename_list, corrected_values_after_enumerate)
+print(updated_filename_list)
