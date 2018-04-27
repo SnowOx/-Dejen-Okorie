@@ -15,7 +15,7 @@ def generate_headings():
         col_heading = sheet.cell(row=1, column=i+1)
         row_heading = sheet.cell(row=i+1, column=1)
         col_heading.font = bold_font_object
-        row_heading.font = bold_font_object
+        row_heading.font = bold_font_object # Use multiple assignment here to improve appearance?
         col_heading.value = i
         row_heading.value = i
 
