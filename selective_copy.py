@@ -4,7 +4,6 @@
 
 import os
 import shutil
-import logging
 
 # STARTING_POSITION = input('Enter path from where to begin walk')
 # OUTPUT_POSITION= input('Enter directory to copy files to')
