@@ -51,6 +51,5 @@ def replace_file_names(sorted_file_list, corrected_values_after_enumerate):
 sorted_filename_list = put_files_in_sorted_list(DIRECTORY)
 filename_int_list = get_list_of_ints(sorted_filename_list)
 corrected_values_after_enumerate = get_correct_sequence_numbering(filename_int_list)
-print(sorted_filename_list)
 updated_filename_list = replace_file_names(sorted_filename_list, corrected_values_after_enumerate)
 print(updated_filename_list)
