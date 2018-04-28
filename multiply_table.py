@@ -22,7 +22,7 @@ def generate_headings():
 def generate_table_content():
     for i in range(1, num + 1):
         for e in range(1, num + 1):
-            cell_content = (sheet.cell(row=i+1, column=e).value) * (sheet.cell(row=i+1, column=e).value)
+            cell_content = i * e
             cell_position = sheet.cell(row=i+1, column=e+1)
             cell_position.value = cell_content
 
@@ -32,3 +32,5 @@ def save_workbook():
 generate_headings()
 generate_table_content()
 save_workbook()
+
+# Solved!
