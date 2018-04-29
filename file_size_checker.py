@@ -10,3 +10,5 @@ for dirpath, dirnames, filenames in os.walk(starting_position):
         file_size = os.path.getsize(file_path)
         if file_size > 1000000: 
             print('%s = %s MB' % (file_path, file_size/1000000))
+
+# Solved
