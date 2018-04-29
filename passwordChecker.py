@@ -8,7 +8,6 @@ import time
 
 # user password input
 
-
 def pwordChecker(password):
     regex1 = re.compile(r'[A-Z]+[a-z]+[0-9]+')
     regex2 = re.compile(r'\w{8,}')# Question: why does this regex need to be on its own line? Adding it to the above means that .search() does not return True
