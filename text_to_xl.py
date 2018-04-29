@@ -57,7 +57,6 @@ def insert_text_and_save_xl_sheet(text_contents_list):
 def save_workbook():
     workbook.save('testBook' + str(random.randint(0,1000)) + '.xlsx')
 
-
 text_filenames_list = get_text_filenames_list(FILE_FOLDER)
 text_contents_list = put_text_content_into_list(text_filenames_list, FILE_FOLDER)
 set_cell_dimensions(text_contents_list)
