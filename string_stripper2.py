@@ -1,5 +1,5 @@
 #!python3
-# strip_string.py
+# string_stripper2.py
 
 import re
 
