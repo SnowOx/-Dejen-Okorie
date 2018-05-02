@@ -1,5 +1,5 @@
 #!python3
-# string_stripper2.py
+# strip_string.py
 
 import re
 
@@ -19,5 +19,7 @@ def strip_string(input_string, *user_characters):
     if not user_characters:
         return remove_whitespace(input_string)
     return remove_user_defined_characters(input_string, user_characters)
+
+strip_string(input_string, *user_characters)
 
 # Solved!
