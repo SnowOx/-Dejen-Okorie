@@ -1,0 +1,52 @@
+#! python3
+# pdf_decrypter.py
+
+import os
+import PyPDF2
+
+DIRECTORY = #
+            
+def return_pdf(filename)
+            if filename.endswith('.pdf'):
+                        filename = pdf_filename
+            return pdf_filename
+
+def check_if pdf_filename_is_encrypted(pdf_filename, PASSWORD):
+            pdf_reader_object = PyPDF2.PdfFileReader(pdf_filename)
+            encryption_outcome = pdf_reader_object.isEncrypted
+            return (is_encrypted, pdf_filename)
+
+def decrypt_pdf_filename(pdf_filename, PASSWORD):
+            pdf_reader_object = PyPDF2.PdfFileReader(pdf_filename) # must I also 'rb' the first PDF?
+            decrypt_pdf = pdf_reader_object.decrypt(PASSWORD)
+            if decrypt_pdf == 1 or 2:
+                        print('Password %s for %s is correct' % PASSWORD, pdf_filename)
+                        is_password_correct = True
+                        return (is_password_correct, pdf_reader_object)
+            if decrypt_pdf == 0:
+                        print('Password %s for %s is incorrect' % PASSWORD, pdf_filename)
+                        is_password_correct = False
+                        return (is_password_correct, pdf_reader_object)
+
+def create_unencrypted_copy(pdf_filename, pdf_reader_object, PASSWORD)
+            pdf_writer_object = PyPDF2.PdfFileWriter()
+            pdf_writer_object.appendPagesFromReader(pdf_reader_object)
+            new_pdf_filename = '%s_unencrypted.pdf' % pdf_filename
+            new_pdf_file_reader_object = PyPDF2.PdfFileReader(open(new_pdf_filename, 'wb'))
+            pdf_writer_object.write(new_pdf_file_reader_object)
+            print('Created new pdf file %s' % new_pdf_filename)
+
+for dirpaths, dirnames, filenames in os.walk(DIRECTORY):
+            os.chdir(DIRECTORY)
+            for filename in filenames:
+                        pdf_filename = return_pdf(filename)
+                        print('Debug: pdf_filename = ' + pdf_filename)
+                        is_encrypted = check_if pdf_filename_is_encrypted(pdf_filename, PASSWORD)
+                        print('Debug: is_encrypted = ' + is_encrypted)
+                        if is_encrypted == False:
+                                    continue
+                        is_password_correct, pdf_reader_object = decrypt_pdf_filename(pdf_filename, PASSWORD)
+                        print('Debug: is_password_correct, pdf_reader_object = ' + is_password_correct, pdf_reader_object)
+                        if is_password_correct == False:
+                                    continue
+                        create_unencrypted_copy(pdf_filename, pdf_reader_object, PASSWORD)
