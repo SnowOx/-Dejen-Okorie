@@ -1,8 +1,3 @@
-#	computer guess process:
-#	computer guesses a letter at random
-#	if hit, computer guesses any letter within the words in list that contain that letter in that location
-#	if there are only a few words left, the computer guesses the word
-
 #! python3
 # hangman_game.py
 
@@ -36,7 +31,7 @@ def check_guess_and_update(letter_guess):
 	for k, v in hidden_word_record.items():
     if v == letter_guess:
 	    hidden_word_record[v] = 1
-    elif v != letter_guess
+    elif v != letter_gueass
         print(‘Incorrect guess’)	
 
 def process_user_guesses_and_update_guess_record()
@@ -60,20 +55,7 @@ def play_hangman_game()
 play_hangman_game()
 
 # Make this work before expanding game
-	
-# Todo: add limited number of guesses
 
-#english_alphabet = [‘a’, ‘b’, ‘c’, ’d’, ’e’, ’f’, ’g’, ‘h’, ‘i’, ‘j’, ‘k’, ‘l’, ‘m’, ‘n’, ‘o’, ‘p’, ‘q’, ‘r’, ‘s’, ‘t’, ‘u’, ‘v’, ‘w’, ‘x’, ‘y’, ‘z’]
-
-#def computer_guess_letter(english_alphabet):
-#	letter_guess = random.choice(english_alphabet = [‘a’, ‘b’, ‘c’, ’d’, ’e’, ’f’, ’g’, ‘h’, ‘i’, ‘j’, ‘k’, ‘l’, ‘m’, ‘n’, ‘o’, ‘p’, ‘q’, ‘r’, ‘s’, ‘t’, ‘u’, ‘v’, ‘w’, ‘x’, ‘y’, ‘z’]
-#	english_alphabet.pop(letter_guess)
-
-#def computer_check_possible_words():
-	
-#def get_possible_guesses()
-#	for possible_word in english_words:
-#		word_letters = word.split()
 		
 
 	
