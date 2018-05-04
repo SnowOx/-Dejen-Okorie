@@ -5,57 +5,84 @@
 
 import random
 
-english_words = #
+english_words = ['pear', 'apple']
 
-def pick_random_hidden_word(english_words)
-	hidden_word = english_words[random.randint(1, len(english_words))]
-	hidden_word_length = len(hidden_word_length)
-	return (hidden_word, hidden_word_length)
+def pick_random_hidden_word(english_words):
+    hidden_word = random.choice(english_words)
+    hidden_word_length = len(hidden_word)
+    return hidden_word
 
-def generate_guess_record_for_word_length(hidden_word): # Modify this to order the stored letters
-	hidden_word_record = {0: letter for letter in hidden_word}
-    return hidden_word_record
-	
-def print_hidden_word_record():
-	for k,v in hidden_word_record.items():
-		if k == 1:
-			print(‘ ‘ + str(v) + ‘ ‘, end=’’)
-		if k == 0:
-			print(‘ ‘ + ‘_’ + ‘ ‘, end=’’)
+
+def get_hidden_word_length(hidden_word):
+    hidden_word_length = len(hidden_word)
+    return hidden_word_length
+
+
+def generate_guess_record(hidden_word):
+    hidden_letter_and_marker_list = []
+    for letter in hidden_word:
+        some_dict = {}
+        some_dict[letter] = 0
+        hidden_letter_and_marker_list.append(some_dict)
+    return hidden_letter_and_marker_list
+
+
+def print_hidden_letter_and_marker_list(hidden_letter_and_marker_list):
+    for letter_and_marker_dictionary in hidden_letter_and_marker_list:
+        for k, v in letter_and_marker_dictionary.items():
+            if v == 1:
+                print(' ' + str(v) + ' ', end='')
+            if v == 0:
+                print(' ' + '_' + ' ', end='')
+
 
 def user_guess():
-	letter_guess = input(‘Enter a letter to guess’)
-	return letter_guess
+    letter_guess = input('Enter a letter to guess')
+    return letter_guess
 
-def check_guess_and_update(letter_guess):
-	for k, v in hidden_word_record.items():
-    if v == letter_guess:
-	    hidden_word_record[v] = 1
-    elif v != letter_gueass
-        print(‘Incorrect guess’)	
 
-def process_user_guesses_and_update_guess_record()
-	while v ==  0 in hidden_word_record.values():
-        print_hidden_word_record()
+def check_guess_and_update(letter_guess, hidden_letter_and_marker_list):
+    for letter_and_marker_dictionary in hidden_letter_and_marker_list:
+        for k, v in letter_and_marker_dictionary.items():
+            if k == letter_guess:
+                letter_and_marker_dictionary[v] = 1
+                print('DEBUG: Cirrect guess')
+            elif k != letter_guess:
+                print('Incorrect guess')
+
+
+def check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length):
+    game_progress_counter = 0
+    for letter_and_marker_dictionary in hidden_letter_and_marker_list:
+        for k, v in letter_and_marker_dictionary.items():
+            if v == 1:
+                game_progress_counter += 1
+    if hidden_word_length != game_progress_counter:
+        game_progress = 'game incomplete'
+        return game_progress
+    else:
+        return
+
+                
+def process_user_guesses_and_update_guess_record(hidden_letter_and_marker_list):
+    while check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length) == 'game incomplete':
+        print_hidden_letter_and_marker_list(hidden_letter_and_marker_list)
         letter_guess = user_guess()
-        check_guess_and_update(letter_guess)
-    game_outcome = 'win'
-	return game_outcome = 'win' 
+        hidden_letter_and_marker_list = check_guess_and_update(letter_guess, hidden_letter_and_marker_list)
+    return
+
 	
- def show_end_of_game_result(game_outcome, hidden_word):
-	if game_outcome == 'win':
-		print(‘Congratulations. You guessed the hidden word %s’ % hidden_word)
+def show_end_of_game_result(hidden_word):
+    print('Congratulations. You guessed the hidden word %s' % hidden_word)
+
 		
-def play_hangman_game()
-    hidden_word, hidden_word_length = pick_random_hidden_word(english_words)
-    generate_guess_record_for_word_length(hidden_word)
-    game_outcome = process_user_guesses_and_update_guess_record
-    show_end_of_game_result(game_outcome, hidden_word)
+def play_hangman_game():
+    hidden_word = pick_random_hidden_word(english_words)
+    hidden_letter_and_marker_list = generate_guess_record_for_word_length(hidden_word)
+    hidden_word_length = get_hidden_word_length(hidden_word)
+    process_user_guesses_and_update_guess_record(hidden_letter_and_marker_list, hidden_word_length)
+    show_end_of_game_result(hidden_word)
 
 play_hangman_game()
 
 # Make this work before expanding game
-
-		
-
-	
