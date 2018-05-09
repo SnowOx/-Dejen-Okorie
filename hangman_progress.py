@@ -5,7 +5,12 @@
 
 import random
 
-english_words = ['pear', 'apple']
+TEXT_FILE_LOCATION = "english_words.txt"
+
+with open(TEXT_FILE_LOCATION) as open_file:
+    english_words = open_file.read().splitlines()
+    
+print(english_words)
 
 def pick_random_hidden_word(english_words):
     hidden_word = random.choice(english_words)
@@ -37,7 +42,7 @@ def print_hidden_letter_and_marker_list(hidden_letter_and_marker_list):
 
 
 def get_letter_guess():
-    letter_guess = input('Enter a letter to guess >> ')
+    letter_guess = (input('Enter a letter to guess >> ')).upper()
     return letter_guess
 
 
