@@ -31,9 +31,9 @@ def print_hidden_letter_and_marker_list(hidden_letter_and_marker_list):
     for letter_and_marker_dictionary in hidden_letter_and_marker_list:
         for k, v in letter_and_marker_dictionary.items():
             if v is 1:
-                print(' ' + str(v) + ' ', end='')
-            if v is not 0:
-                print(' ' + '_' + ' ', end='')
+                print(' '+ str(k) + ' ', end='')
+            if v is 0:
+                print(' ' + '*' + ' ', end='')
 
 
 def get_letter_guess():
@@ -65,9 +65,7 @@ def check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_lengt
 
                 
 def process_user_guesses_and_update_guess_record(hidden_letter_and_marker_list, letter_guess, hidden_word_length):
-    while check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length) is 'game incomplete':
-        print_hidden_letter_and_marker_list(hidden_letter_and_marker_list)
-        check_guess_and_update(letter_guess, hidden_letter_and_marker_list)
+ 
     return
 
 	
@@ -77,16 +75,24 @@ def show_end_of_game_result(hidden_word):
 		
 def play_hangman_game():
     hidden_word = pick_random_hidden_word(english_words)
+    print(hidden_word)
     hidden_word_length = get_hidden_word_length(hidden_word)
+    print(hidden_word_length)
     hidden_letter_and_marker_list = generate_hidden_letter_and_marker_list(hidden_word)
-    letter_guess = get_letter_guess()
-    check_guess_and_update(letter_guess, hidden_letter_and_marker_list)
-    game_progress = check_whether_game_complete(hidden_letter_and_marker_list,
-                                                hidden_word_length)
-    process_user_guesses_and_update_guess_record(hidden_letter_and_marker_list,
-                                                 letter_guess,
-                                                 hidden_word_length)
-    show_end_of_game_result(hidden_word)
+    print(hidden_letter_and_marker_list)
+    while True:
+        letter_guess = get_letter_guess()
+        print(letter_guess)
+        check_guess_and_update(letter_guess, hidden_letter_and_marker_list)
+        print(hidden_letter_and_marker_list)
+        game_progress = check_whether_game_complete(hidden_letter_and_marker_list,
+                                                    hidden_word_length)
+        print(game_progress)
+        check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length)
+        print_hidden_letter_and_marker_list(hidden_letter_and_marker_list)
+        check_guess_and_update(letter_guess, hidden_letter_and_marker_list)
+        
+    #show_end_of_game_result(hidden_word)
 
 play_hangman_game()
 
