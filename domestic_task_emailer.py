@@ -60,8 +60,8 @@ domestic_tasks = ['washing the dishes',
                   'walking all of the neighbourhood\'s dogs']
 
 people = ['Robert', 'Mica', 'Lina', 'Keith']
-sender_account_email = '000td000@gmail.com'
-recipient_email = '1239@pm.me'
+sender_account_email = '*@gmail.com'
+recipient_email = '*'
 server_address = 'smtp.gmail.com'
 server_port = 587
 sender_account_password = input('Enter password >> ')
