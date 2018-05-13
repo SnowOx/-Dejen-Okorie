@@ -5,68 +5,57 @@ import smtplib
 import random
 import datetime
 
+DOMESTIC_TASKS = ['washing the dishes',
+                  'cleaning the  bathroom',
+                  'vacuuming Fubin\'s room',
+                  'walking all of the neighbourhood\'s dogs']
+
+PEOPLE = ['Robert', 'Mica', 'Lina', 'Keith']
+SENDER_EMAIL = '000td000@gmail.com'
+RECIP_EMAIL = '1239@pm.me'
+SERVER_ADDRESS = 'smtp.gmail.com'
+SERVER_PORT = 587
+SENDER_PASSWORD = input('Enter password >> ')
+
 def select_domestic_task():
-    selected_task = random.choice(domestic_tasks)
-    domestic_tasks.remove(selected_task)
+    selected_task = random.choice(DOMESTIC_TASKS)
+    DOMESTIC_TASKS.remove(selected_task)
     return selected_task
 
-def connect_to_smtp_server(server_address, server_port,
-                           sender_account_email, sender_account_password):
-    smtp_object = smtplib.SMTP(server_address, server_port)
+def connect_to_smtp_server():
+    smtp_object = smtplib.SMTP(SERVER_ADDRESS, SERVER_PORT)
     smtp_object.ehlo()
     smtp_object.starttls()
-    smtp_object.login(sender_account_email, sender_account_password)
+    smtp_object.login(SENDER_EMAIL, SENDER_PASSWORD)
     return smtp_object
 
 def get_current_time():
     current_time = datetime.datetime.now().strftime('%H:%M on the %d/%m/%Y')
     return current_time
 
-def send_message(sender_account_email,
-                 recipient_email, person_name,
-                 selected_domestic_task, smtp_object, current_time):
-    smtp_object.sendmail(sender_account_email, recipient_email,
-                         'Subject: Weekly Domestic Task for %s\n\n\
-                          Dear %s, \n\
-                          Your task for this week is %s\n\
-                          Best wishes,\n\
-                          T\n\n\
-                          P.S The current time is %s\n' % (
-            person_name, person_name, selected_domestic_task, current_time))
+def send_message(smtp_object, person_name, selected_domestic_task, current_time):
+    smtp_object.sendmail(SENDER_EMAIL, RECIP_EMAIL,'Subject: Weekly Domestic Task for %s\n\n' % person_name+
+                          'Dear %s, \n' % person_name +
+                          'Your task for this week is %s\n' % selected_domestic_task +
+                          'Best wishes,\n'+
+                          'T\n\n'+
+                          'P.S The current time is %s\n' % current_time)
 
 def quit_server_connection(smtp_object):
     smtp_object.quit()
 
-def assign_domestic_tasks_and_send_emails(people,
-                                          server_address, server_port,
-                                          sender_account_email, sender_account_password,
-                                          recipient_email):
-    for person_name in people:
+def assign_domestic_tasks_and_send_emails():
+    for person_name in PEOPLE:
         selected_domestic_task = select_domestic_task()
-        smtp_object = connect_to_smtp_server(server_address, server_port,
-                                             sender_account_email,
-                                             sender_account_password)
+        smtp_object = connect_to_smtp_server()
         current_time = get_current_time()
-        send_message(sender_account_email, recipient_email,
-                     person_name, selected_domestic_task, smtp_object,
-                     current_time)
+        send_message(smtp_object, person_name,selected_domestic_task, current_time)
         quit_server_connection(smtp_object)
 
 
 # Engine
-domestic_tasks = ['washing the dishes',
-                  'cleaning the  bathroom',
-                  'vacuuming Fubin\'s room',
-                  'walking all of the neighbourhood\'s dogs']
 
-people = ['Robert', 'Mica', 'Lina', 'Keith']
-sender_account_email = '*@gmail.com'
-recipient_email = '*'
-server_address = 'smtp.gmail.com'
-server_port = 587
-sender_account_password = input('Enter password >> ')
-assign_domestic_tasks_and_send_emails(people,server_address,
-                                      server_port,sender_account_email,
-                                      sender_account_password, recipient_email)
+
+assign_domestic_tasks_and_send_emails()
 
 # Solved

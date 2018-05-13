@@ -21,9 +21,6 @@ def check_guess_against_hidden_card(hidden_card, guess):
         return guess_relation_to_hidden_card
     if guess < hidden_card:
         print('Incorrect. Your guess was lower than the hidden card')
-        #options_list.pop[i:] I could use this as part of an options list approach where there is an initial list that
-        # contains all of the options that the hidden card might be. I then remove numbers from the options list depending on
-        # the check_guess_against_hidden_card result. Suggest writing this options list variant afterwards.
         guess_relation_to_hidden_card = 'hidden card is higher'
         return guess_relation_to_hidden_card
     if guess > hidden_card:
