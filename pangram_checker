@@ -1,0 +1,17 @@
+#! python3
+# pangram_checker.py
+
+input_string = str(input('Enter your input string to be checked'))
+
+def check_if_pangram(input_string):
+    alphabet_set = {'a’, 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                    'I', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 
+                    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 
+                    'y', 'z'}
+    input_string_without_whitespace = input_string.replace(' ', '')
+    if alphabet_set == set(input_string+_without_whitespace):
+        print('%s \nis a pangram' % input_string)
+    else:
+        print('%s \nis not a pangram' % input_string) 
+
+check_if_pangram(input_string)
