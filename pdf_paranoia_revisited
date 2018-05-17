@@ -1,0 +1,53 @@
+#!python3
+# pdf_paranoia_revisited.py
+import PyPDF2
+import os
+
+PASSWORD = #
+START_POSITION= #
+
+def check_if_pdf(filename):
+	if filename.endswith(‘.pdf’):
+		return True
+	else:
+		return False
+
+def get_reader_object(stream):
+    reader_object = PdfFileReader(pdf_file_path)
+    return reader_object
+
+def clone_reader_object(reader_object):
+    cloned_reader_object = PdfFileWriter.cloneReaderDocumentRoot(reader_object)
+	return cloned_reader_object
+	
+def encrypt_file(cloned_reader_object):
+    encrypted_pdf_object = PdfFileWriter.encrypt(PASSWORD)
+	return encrypted_pdf_object
+
+def get_output_path(filename):
+    filename_without_suffix = filename [:-4]
+    filename_with_new_suffix = filename_without_suffix + ‘_encrypted.pdf’
+	output_path = os.path.join(START_POSITION, pdf_file_path_with_new_suffix)
+	return output_path
+
+def write_file(writer_object, output_path):
+    PdfFileWriter.write(output_path)
+
+def check_ file_is_encrypted(path):
+	reader_object  = get_reader_object(path)
+	if reader_object.decrypt(PASSWORD) == 1:
+		print(‘Successful encryption test’)
+	else:
+		print(‘Unsuccessful encryption test’)
+
+# Engine
+for dirpath, dirnames, filenames in os.walk(START_POSITION):
+	for filename in filenames:
+		if check_if_pdf(filename) == False:
+			continue
+		reader_object = get_reader_object(filename):
+        cloned_reader_object = clone_reader_object(reader_object)
+        encrypted_pdf_object = encrypt_file(cloned_reader_object)
+        output_path = get_output_path(pdf_file_path)
+        write_file(writer_object, output_path)
+        check_ file_is_encrypted(path)
