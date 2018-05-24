@@ -41,4 +41,4 @@ for excel_file in excel_files:
     write_sheet_data_to_csv(excel_file, sheet_data)
     print('Wrote %s to csv' % excel_file)
 
-# Solved!
+# Solved
