@@ -2,7 +2,66 @@
 # pdf_paranoia_revisited.py
 import PyPDF2
 import os
+#!python3
+# pdf_paranoia_revisited.py
 
+import PyPDF2
+import os
+
+PASSWORD = 'rain'
+START_POSITION = '//Users//A//Desktop'
+
+def check_if_pdf(filename):
+    if filename.endswith(".pdf"):
+        return True
+    else:
+        return False
+
+def add_encryption(pdf_writer):
+    pdf_writer.encrypt(PASSWORD)
+
+# Engine
+for dirpath, dirnames, filenames in os.walk(START_POSITION):
+    os.chdir(dirpath)
+
+    for filename in filenames:
+        # Exclude if not pdf file
+        if check_if_pdf(filename) is False:
+            continue
+        print('Filename %s is a PDF file' % filename)
+        # Open pdf file
+        input_pdf_file = open(filename, "rb")
+        # Read pdf file and add its pages to pdf_writer
+        pdf_reader = PyPDF2.PdfFileReader(input_pdf_file)
+        pdf_writer = PyPDF2.PdfFileWriter()
+        for page_number in range(pdf_reader.numPages):
+            pdf_writer.addPage(pdf_reader.getPage(page_number))
+        input_pdf_file.close()
+        # Add encryption to pdf_writer
+        add_encryption(pdf_writer)
+        # Create output file
+        output_filename = filename[:-4] + "_encrypted.pdf"
+        output_pdf_file = open(output_filename, "wb")
+        # Write out pages from pdf_writer to output_pdf_file
+        pdf_writer.write(output_pdf_file)
+        output_pdf_file.close()
+        # Check newly encrypted file's encryption
+        opened_newly_encrypted_file = open(output_pdf_file, "rb")
+        checking_pdf_reader = PyPDF2.PdfFileReader(output_pdf_file)
+        opened_newly_encrypted_file.close()
+        if checking_pdf_reader.decrypt(PASSWORD) == 1:
+            print("Successful encryption test.")
+        else:
+            print("Unsuccessful encryption test")
+
+
+        # except Exception as inst:
+        #     print('An exception occured becase %s %s' % (filename, inst))
+
+    print('Done')
+
+
+# Printing blank pages. Return to look at this later.
 PASSWORD = #
 START_POSITION= #
 
