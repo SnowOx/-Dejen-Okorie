@@ -110,3 +110,4 @@ for dirpath, dirnames, filenames in os.walk(START_POSITION):
         output_path = get_output_path(pdf_file_path)
         write_file(writer_object, output_path)
         check_ file_is_encrypted(path)
+	
