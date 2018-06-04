@@ -1,8 +1,4 @@
-#!python3
-# pdf_paranoia_revisited.py
-import PyPDF2
-import os
-#!python3
+#! python3
 # pdf_paranoia_revisited.py
 
 import PyPDF2
@@ -11,103 +7,40 @@ import os
 PASSWORD = 'rain'
 START_POSITION = '//Users//A//Desktop'
 
-def check_if_pdf(filename):
-    if filename.endswith(".pdf"):
-        return True
-    else:
-        return False
-
-def add_encryption(pdf_writer):
-    pdf_writer.encrypt(PASSWORD)
-
-# Engine
+encryption_failed = []
 for dirpath, dirnames, filenames in os.walk(START_POSITION):
     os.chdir(dirpath)
-
     for filename in filenames:
-        # Exclude if not pdf file
-        if check_if_pdf(filename) is False:
-            continue
-        print('Filename %s is a PDF file' % filename)
+	if filename.endswith(".pdf"):
         # Open pdf file
-        input_pdf_file = open(filename, "rb")
-        # Read pdf file and add its pages to pdf_writer
-        pdf_reader = PyPDF2.PdfFileReader(input_pdf_file)
-        pdf_writer = PyPDF2.PdfFileWriter()
-        for page_number in range(pdf_reader.numPages):
-            pdf_writer.addPage(pdf_reader.getPage(page_number))
-        input_pdf_file.close()
-        # Add encryption to pdf_writer
-        add_encryption(pdf_writer)
-        # Create output file
-        output_filename = filename[:-4] + "_encrypted.pdf"
-        output_pdf_file = open(output_filename, "wb")
-        # Write out pages from pdf_writer to output_pdf_file
-        pdf_writer.write(output_pdf_file)
-        output_pdf_file.close()
-        # Check newly encrypted file's encryption
-        opened_newly_encrypted_file = open(output_pdf_file, "rb")
-        checking_pdf_reader = PyPDF2.PdfFileReader(output_pdf_file)
-        opened_newly_encrypted_file.close()
-        if checking_pdf_reader.decrypt(PASSWORD) == 1:
-            print("Successful encryption test.")
-        else:
-            print("Unsuccessful encryption test")
-
-
-        # except Exception as inst:
-        #     print('An exception occured becase %s %s' % (filename, inst))
-
-    print('Done')
-
-
-# Printing blank pages. Return to look at this later.
-PASSWORD = #
-START_POSITION= #
-
-def check_if_pdf(filename):
-	if filename.endswith(‘.pdf’):
-		return True
-	else:
-		return False
-
-def get_reader_object(stream):
-    reader_object = PdfFileReader(pdf_file_path)
-    return reader_object
-
-def clone_reader_object(reader_object):
-    cloned_reader_object = PdfFileWriter.cloneReaderDocumentRoot(reader_object)
-	return cloned_reader_object
-	
-def encrypt_file(cloned_reader_object):
-    encrypted_pdf_object = PdfFileWriter.encrypt(PASSWORD)
-	return encrypted_pdf_object
-
-def get_output_path(filename):
-    filename_without_suffix = filename [:-4]
-    filename_with_new_suffix = filename_without_suffix + ‘_encrypted.pdf’
-	output_path = os.path.join(START_POSITION, pdf_file_path_with_new_suffix)
-	return output_path
-
-def write_file(writer_object, output_path):
-    PdfFileWriter.write(output_path)
-
-def check_ file_is_encrypted(path):
-	reader_object  = get_reader_object(path)
-	if reader_object.decrypt(PASSWORD) == 1:
-		print(‘Successful encryption test’)
-	else:
-		print(‘Unsuccessful encryption test’)
-
-# Engine
-for dirpath, dirnames, filenames in os.walk(START_POSITION):
-	for filename in filenames:
-		if check_if_pdf(filename) == False:
-			continue
-		reader_object = get_reader_object(filename):
-        cloned_reader_object = clone_reader_object(reader_object)
-        encrypted_pdf_object = encrypt_file(cloned_reader_object)
-        output_path = get_output_path(pdf_file_path)
-        write_file(writer_object, output_path)
-        check_ file_is_encrypted(path)
-	
+		input_path = os.path.join(dirpath, filename)
+		# Read pdf file and add its pages to pdf_writer
+		pdf_reader = PyPDF2.PdfFileReader(open(path, "rb"))
+		if pdf_reader.isEncrypted == False:
+			pdf_writer = PyPDF2.PdfFileWriter()
+			for page_number in range(pdf_reader.numPages):
+			    pdf_writer.addPage(pdf_reader.getPage(page_number))
+			# Add encryption to pdf_writer
+			pdf_writer.encrypt(PASSWORD)
+			# Create output file
+			encrypted_path = input_path[:-4] + "_encrypted.pdf"
+			encrypted_output_file = open(encrypted_path, "wb")
+			# Write out pages from pdf_writer to output_pdf_file
+			pdf_writer.write(encrypted_output_file)
+			encrypted_output_file.close()
+			# Check newly encrypted file's encryption
+			opened_newly_encrypted_file = open(encrypted_path, "rb")
+			checking_pdf_reader = PyPDF2.PdfFileReader(output_pdf_file)
+			opened_newly_encrypted_file.close()
+			if checking_pdf_reader.decrypt(PASSWORD) == 1:
+			    print("Successful encryption test."
+                      "Remove %" % opened_newly_encrypted_file)
+			else:
+			    print("Unsuccessful encryption test")
+                encryption_failed.append(filename)
+                
+if encryption_failed != []:
+    print('The following files failed encryption tests: ')
+    print(str(encryption_failed))
+elif encryption_failed == []:
+    print('All files that os.walk encountered have been encrypted')
