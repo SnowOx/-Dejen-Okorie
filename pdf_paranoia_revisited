@@ -35,7 +35,7 @@ for dirpath, dirnames, filenames in os.walk(START_POSITION):
                     print("Successful encryption test.")
                 else:
                     print("Unsuccessful encryption test")
-            encryption_failed.append(filename)
+                    encryption_failed.append(filename)
 
 if encryption_failed != []:
     print('The following files failed encryption tests: ')
