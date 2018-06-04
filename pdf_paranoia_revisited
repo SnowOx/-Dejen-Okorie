@@ -5,7 +5,7 @@ import PyPDF2
 import os
 
 PASSWORD = 'rain'
-START_POSITION = 'C:\\Users\\A\Desktop\\South US Journey Documents'
+START_POSITION = '#'
 
 encryption_failed = []
 for dirpath, dirnames, filenames in os.walk(START_POSITION):
