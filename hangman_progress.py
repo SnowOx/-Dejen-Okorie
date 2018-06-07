@@ -43,6 +43,9 @@ def print_hidden_letter_and_marker_list(hidden_letter_and_marker_list):
 
 def get_letter_guess():
     letter_guess = input('Enter a letter to guess >> ')
+    if letter_guess in letter_and_marker_dictionary:
+        print('You have already guessed this letter. Please guess another letter')
+        get_letter_guess()
     return letter_guess
 
 def check_guess_and_update(letter_guess, hidden_letter_and_marker_list):
