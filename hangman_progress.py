@@ -3,6 +3,14 @@
 
 # Begin by creating a hangman game for a human guesser.
 # # Would like to create a GUI after I have completed the basic mechanics
+"""
+  _ _ _ _
+  |     |  
+  |   \ O / 
+  |     | 
+  |    / \
+ _^_ _  
+"""
 
 import random
 
