@@ -13,8 +13,8 @@
 """
 
 import random
-#import requests
-#import bs4
+import requests
+import bs4
 
 TEXT_FILE_LOCATION = "E:\\Google Drive\\OP2\\dk\\english_words.txt"
 
@@ -47,11 +47,11 @@ def print_hidden_letter_and_marker_list(hidden_letter_and_marker_list):
     print()
 
 
-def get_letter_guess(letter_guess_record):
+def get_letter_guess(letter_guess_record, hidden_word):
     letter_guess = input('Enter a letter to guess, or enter * for a clue>> ').upper()
     if letter_guess == '*':
         show_clue(hidden_word)
-        get_letter_guess(letter_guess_record)
+        get_letter_guess(letter_guess_record, hidden_word)
     elif letter_guess in letter_guess_record:
         print('You have already guessed this letter. Please guess again!')
         get_letter_guess(letter_guess_record)
@@ -79,13 +79,14 @@ def update_letter_guess_records(letter_guess, letter_guess_record, number_of_gue
     number_of_guesses_record += 1
     return (letter_guess_record, number_of_guesses_record)
 
-hangman_image =
+hangman_image = [
 ['  _ _ _ _  '],
 [' |     |   '],
 [' |   \ O / '],
 [' |     |   '],
 [' |    / \  '],
 [' _^_ _     '],
+ ]
 
 
 def check_guess_and_update(letter_guess, hidden_letter_and_marker_list):
@@ -122,10 +123,10 @@ def show_end_of_game_congratulations(hidden_word):
     print('\nCongratulations! You guessed the hidden word \'%s\'!' % hidden_word.title())
 
 
-def main_game_loop(is_game_finished, hidden_letter_and_marker_list, hidden_word_length):
+def main_game_loop(is_game_finished, hidden_letter_and_marker_list, hidden_word_length, hidden_word):
     letter_guess_record, number_of_guesses_record = create_letter_guess_records()
     while is_game_finished != True:
-        letter_guess = get_letter_guess(letter_guess_record)
+        letter_guess = get_letter_guess(letter_guess_record, hidden_word)
         update_letter_guess_records(letter_guess, letter_guess_record, number_of_guesses_record)
         check_guess_and_update(letter_guess, hidden_letter_and_marker_list)
         print_hidden_letter_and_marker_list(hidden_letter_and_marker_list)
@@ -133,12 +134,13 @@ def main_game_loop(is_game_finished, hidden_letter_and_marker_list, hidden_word_
 
 
 def play_hangman_game():
+    global hidden_word
     hidden_word = pick_random_hidden_word(english_words)
     print(hidden_word)  # DBUG To remove
     hidden_word_length = get_hidden_word_length(hidden_word)
     hidden_letter_and_marker_list = generate_hidden_letters_and_markers_for(hidden_word)
     is_game_finished = False
-    main_game_loop(is_game_finished, hidden_letter_and_marker_list, hidden_word_length)
+    main_game_loop(is_game_finished, hidden_letter_and_marker_list, hidden_word_length, hidden_word)
     show_end_of_game_congratulations(hidden_word)
 
 
