@@ -1,53 +1,38 @@
-un_stopwatch(run_stopwatch(
+#! python3
+# prettified_stopwatch.py
 
-run_stopwatch(
+import time
 
-run_stopwatch(
+def show_instructions():
+    print('Press enter to begin. Afterwards, press enter to click the stopwatch')
+    input()
+    print('Started')
+    
+    
+def start_tracking_lap_times():
+    start_time = time.time()
+    latest_time = start_time
+    lap_number = 1
+    try:
+        while True:
+            input()
+            lap_time = round(time.time() - latest_time, 2)
+            total_time = round(time.time() - start_time, 2)
+            print_times(lap_number, total_time, lap_time)
+            lap_number += 1
+            latest_time = time.time()
+    except KeyboardInterrupt:
+        print('Timing stopped')
+        
+def print_times(lap_number, total_time, lap_time):
+    lap_number_rjust = str(lap_number).rjust(2)
+    total_time_ljust = str(total_time).center(6)
+    lap_time_rjust = str(lap_time).rjust(7)
+    print('Lap #{}: {} (Lap time{})'.format(
+      lap_number_rjust, total_time_ljust, lap_time_rjust), end='')
+    
+def run_stopwatch():
+    show_instructions()
+    start_tracking_lap_times()
 
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
-
-run_stopwatch(
+run_stopwatch()
