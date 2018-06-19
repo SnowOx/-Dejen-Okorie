@@ -23,7 +23,8 @@ def start_tracking_lap_times():
             latest_time = time.time()
     except KeyboardInterrupt:
         print('Timing stopped')
-        
+  
+
 def print_times(lap_number, total_time, lap_time):
     lap_number_rjust = str(lap_number).rjust(2)
     total_time_ljust = str(total_time).center(6)
@@ -31,8 +32,10 @@ def print_times(lap_number, total_time, lap_time):
     print('Lap #{}: {} (Lap time{})'.format(
       lap_number_rjust, total_time_ljust, lap_time_rjust), end='')
     
+    
 def run_stopwatch():
     show_instructions()
     start_tracking_lap_times()
 
+    
 run_stopwatch()
