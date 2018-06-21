@@ -8,7 +8,6 @@
 #	py.exe multi_clipboard.pyw check <keyword> - Check in key exists in the multi clipboard shelf file
 #	py.exe multi_clipboard.pyw <keyword> - Loads keyword linked text to clipboard.
 #   py.exe multi_clipboard.pyw show keywords - Loads all keywords to clipboard.
-# </editor-fold>
 
 import shelve
 import pyperclip
@@ -52,6 +51,7 @@ def delete_key_value_pair_if_in_shelf_file():
     else:
         print('Did not find {} in multi_clipboard_shelf. Did not delete anything.'.format(sys.argv[1]))
 
+        
 def delete_all_key_value_pairs():
     for key in multi_clipboard_shelf.keys():
         del multi_clipboard_shelf[key]
