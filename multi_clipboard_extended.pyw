@@ -3,9 +3,9 @@
 # Usage:
 #	py.exe multi_clipboard.pyw save <keyword> - Saves clipboard to keyword.
 #	py.exe multi_clipboard.pyw load keywords - Loads all keywords to clipboard.
-#   py.exe multi_clipboard.pyw delete <keyword> - Deletes key-value pair in the multi clipboard shelf file
-#	py.exe multi_clipboard.pyw delete all keywords - Deletes all key-value pairs in the multi clipboard shelf file
-#	py.exe multi_clipboard.pyw check <keyword> - Check in key exists in the multi clipboard shelf file
+#   py.exe multi_clipboard.pyw delete <keyword> - Deletes key-value pair in the multi clipboard shelf file.
+#	py.exe multi_clipboard.pyw delete all keywords - Deletes all key-value pairs in the multi clipboard shelf file.
+#	py.exe multi_clipboard.pyw check <keyword> - Check in key exists in the multi clipboard shelf file.
 #	py.exe multi_clipboard.pyw <keyword> - Loads keyword linked text to clipboard.
 #   py.exe multi_clipboard.pyw show keywords - Loads all keywords to clipboard.
 
