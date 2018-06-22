@@ -2,40 +2,48 @@
 # prettified_stopwatch.py
 
 import time
+import pyperclip
+import pprint
 
 def show_instructions():
     print('Press enter to begin. Afterwards, press enter to click the stopwatch')
     input()
     print('Started')
-    
-    
+
+
 def start_tracking_lap_times():
     start_time = time.time()
     latest_time = start_time
     lap_number = 1
+    record_of_lap_times = []
     try:
         while True:
             input()
             lap_time = round(time.time() - latest_time, 2)
             total_time = round(time.time() - start_time, 2)
-            print_times(lap_number, total_time, lap_time)
+            print_and_record_times(lap_number, total_time, lap_time, record_of_lap_times)
             lap_number += 1
             latest_time = time.time()
     except KeyboardInterrupt:
-        print('Timing stopped')
-  
+        print('\nTiming stopped. ' +
+              '\nCopied the record of the lap times below to your clipboard:' +
+              '\n{}'.format(str(record_of_lap_times)))
+        copy_record_of_lap_times_to_clipboard(record_of_lap_times)
 
-def print_times(lap_number, total_time, lap_time):
+def print_and_record_times(lap_number, total_time, lap_time, record_of_lap_times):
     lap_number_rjust = str(lap_number).rjust(2)
     total_time_ljust = str(total_time).center(6)
     lap_time_rjust = str(lap_time).rjust(7)
-    print('Lap #{}: {} (Lap time{})'.format(
-      lap_number_rjust, total_time_ljust, lap_time_rjust), end='')
-    
-    
+    lap_times_entry = 'Lap #{}: {} (Lap time{})'.format(lap_number_rjust, total_time_ljust, lap_time_rjust)
+    print(lap_times_entry, end='')
+    record_of_lap_times.append(lap_times_entry)
+
+def copy_record_of_lap_times_to_clipboard(record_of_lap_times):
+    pyperclip.copy(str(record_of_lap_times))
+
+
 def run_stopwatch():
     show_instructions()
     start_tracking_lap_times()
 
-    
 run_stopwatch()
