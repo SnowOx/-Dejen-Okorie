@@ -17,18 +17,17 @@ def start_tracking_lap_times():
     lap_number = 1
     record_of_lap_times = []
     try:
-        while True:
-            input()
-            lap_time = round(time.time() - latest_time, 2)
-            total_time = round(time.time() - start_time, 2)
-            print_and_record_times(lap_number, total_time, lap_time, record_of_lap_times)
-            lap_number += 1
-            latest_time = time.time()
+        main_stopwatch_loop(latest_time, start_time, lap_number, record_of_lap_times)
     except KeyboardInterrupt:
-        print('\nTiming stopped. ' +
-              '\nCopied the record of the lap times below to your clipboard:' +
-              '\n{}'.format(str(record_of_lap_times)))
+        print_record_of_lap_times(record_of_lap_times)
         copy_record_of_lap_times_to_clipboard(record_of_lap_times)
+
+
+def print_record_of_lap_times(record_of_lap_times):
+    print('\nTiming stopped. ' +
+          '\nCopied the record of the lap times below to your clipboard:' +
+          '\n{}'.format(str(record_of_lap_times)))
+
 
 def print_and_record_times(lap_number, total_time, lap_time, record_of_lap_times):
     lap_number_rjust = str(lap_number).rjust(2)
@@ -38,6 +37,17 @@ def print_and_record_times(lap_number, total_time, lap_time, record_of_lap_times
     print(lap_times_entry, end='')
     record_of_lap_times.append(lap_times_entry)
 
+
+def main_stopwatch_loop(latest_time, start_time, lap_number, record_of_lap_times):
+    while True:
+        input()
+        lap_time = round(time.time() - latest_time, 2)
+        total_time = round(time.time() - start_time, 2)
+        print_and_record_times(lap_number, total_time, lap_time, record_of_lap_times)
+        lap_number += 1
+        latest_time = time.time()
+
+
 def copy_record_of_lap_times_to_clipboard(record_of_lap_times):
     pyperclip.copy(str(record_of_lap_times))
 
@@ -45,5 +55,6 @@ def copy_record_of_lap_times_to_clipboard(record_of_lap_times):
 def run_stopwatch():
     show_instructions()
     start_tracking_lap_times()
+
 
 run_stopwatch()
