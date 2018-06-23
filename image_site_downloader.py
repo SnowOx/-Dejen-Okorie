@@ -1,25 +1,52 @@
 #! python3
 # image_site_downloader.py
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+import requests
+import bs4
+import os
 
-SITE = 'https://unsplash.com/'
-DESIRED_SEARCH_TERM = "leaf"
+DESIRED_SEARCH_TERM = "foxes"
+URL = 'https://unsplash.com/search/photos/' + str(DESIRED_SEARCH_TERM)
 
-def open_browser_and_get_browser_object():
-    global browser_object
-    browser_object = webdriver.Firefox()
-    print(type(browser_object))
-    browser_object.get(SITE)
-    return browser_object
+# Tidy up the writing below, including the unclear names
 
-def get_search_bar_object_and_search(DESIRED_SEARCH_TERM):
-    search_bar_object = browser_object.find_element_by_class("qWUF0")
-    search_bar_object.send_keys(DESIRED_SEARCH_TERM)
-    search_button_object = browser_object.find_element_by_class("_37zTg _1l4Hh _1CBrG _3TTOE Sb388")
-    search_button_object.click()
+def download_page():
+    page_download = requests.get(URL)
+    page_download.raise_for_status()
+    print('Downloading %s' % URL)
+    page_soup = bs4.BeautifulSoup(page_download.text, "lxml")
+    return page_soup
 
 
-browser_object = open_browser_and_get_browser_object()
-get_search_bar_object_and_search(DESIRED_SEARCH_TERM)
+def get_image_url_list(page_soup):
+    raw_links = page_soup.select('img[src]')
+    image_url_list = [item.get('src') for item in raw_links if '&w=1000' in item.get('src')] # Purifies list to give search images
+    image_url_list = list(set(image_url_list))
+    return image_url_list
+
+
+def write_images(image_url_list):
+    counter = 0
+    for image_url in image_url_list:
+        requests.get(image_url).raise_for_status()
+        request_url = requests.get(image_url).content
+        save_the_image(request_url,counter)
+        counter += 1
+
+        
+def save_the_image(request_url, counter):
+    os.makedirs('Search for ' + str(DESIRED_SEARCH_TERM) + ' images', exist_ok=True)
+    # Todo: modify to write new files into the newly created folder
+    image_file = open(str(DESIRED_SEARCH_TERM) + str(counter) + '.jpg', 'wb')
+    image_file.write(request_url)
+    image_file.close()
+    print('Writing %s ' % counter)
+
+
+# Engine
+page_soup = download_page()
+image_url_list = get_image_url_list(page_soup)
+print(image_url_list)
+write_images(image_url_list)
+
+Solved! :)
