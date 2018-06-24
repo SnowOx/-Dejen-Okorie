@@ -5,6 +5,8 @@
 # # Would like to create a GUI after I have completed the basic mechanics
 
 
+# There is a bug whereby, after a clue has ben given, the next guess is taken to be '*' rather than the entered guess letter
+
 import random
 import requests
 import bs4
@@ -88,14 +90,110 @@ def update_letter_guess_records(letter_guess, letter_guess_record, number_of_gue
     return (letter_guess_record, number_of_guesses_record)
 
 
-hangman_image = [
-['  _ _ _ _  '],
-[' |     |   '],
-[' |   \ O / '],
-[' |     |   '],
-[' |    / \  '],
-[' _^_ _     '],
- ]
+str_image_16 = [
+'''
+ _ _ _ _  
+ |     |   
+ |   \ O / 
+ |     |   
+ |    / \  
+_^_ _     
+'''
+]
+
+str_image_15 = [
+'''
+ _ _ _ _  
+ |     |   
+ |   \ O / 
+ |     |   
+ |    /   
+_^_ _     
+'''
+]
+
+str_image_14 = [
+'''
+ _ _ _ _  
+ |     |   
+ |   \ O / 
+ |     |   
+ |       
+_^_ _     
+'''
+]
+
+str_image_13 = [
+'''
+ _ _ _ _  
+ |     |   
+ |   \ O / 
+ |     |   
+ |       
+_^_ _     
+'''
+]
+
+str_image_12 = [
+'''
+ _ _ _ _  
+ |     |   
+ |   \ O / 
+ |        
+ |       
+_^_ _     
+'''
+]
+
+str_image_11 = [
+'''
+ _ _ _ _  
+ |     |   
+ |   \ O  
+ |        
+ |       
+_^_ _     
+'''
+]
+
+str_image_10 = [
+'''
+ _ _ _ _  
+ |     |   
+ |     O  
+ |        
+ |       
+_^_ _     
+'''
+]
+
+str_image_9 = [
+'''
+ _ _ _ _  
+ |     |   
+ |       
+ |        
+ |       
+_^_ _     
+'''
+]
+
+str_image_8 = [
+'''
+ _ _ _ _  
+ |        
+ |       
+ |        
+ |       
+_^_ _     
+'''
+]
+
+
+str_images = [str_image_16, str_image_15, str_image_14, str_image_13, str_image_12,
+              str_image_11, str_image_10, str_image_9, str_image_8]
+
+
 
 
 def check_letter_guess_and_update(letter_guess, hidden_letter_and_marker_list):
@@ -118,7 +216,7 @@ def show_correct_or_incorrect_message_for_the_guess(correct_or_incorrect_guess_c
 
 
 def check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length, letter_guess, hidden_word):
-    if len(letter_guess) == 1:
+    if len(letter_guess) <= 1:
         is_game_finished = check_if_game_complete_based_on_letter_guess(hidden_letter_and_marker_list,
                                                                         hidden_word_length)
     elif len(letter_guess) > 1:
@@ -170,7 +268,7 @@ def main_game_loop(is_game_finished, hidden_letter_and_marker_list,
 
 def play_hangman_game():
     hidden_word = pick_random_hidden_word(ENGLISH_WORDS)
-    print(hidden_word)  # DBUG To remove
+    #print(hidden_word)  # DBUG To remove
     hidden_word_length = get_hidden_word_length(hidden_word)
     hidden_letter_and_marker_list = generate_hidden_letters_and_markers_for(hidden_word)
     is_game_finished = False
