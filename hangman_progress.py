@@ -5,8 +5,6 @@
 # # Would like to create a GUI after I have completed the basic mechanics
 
 
-# There is a bug whereby, after a clue has ben given, the next guess is taken to be '*' rather than the entered guess letter
-
 import random
 import requests
 import bs4
@@ -45,13 +43,14 @@ def print_hidden_letter_and_marker_list(hidden_letter_and_marker_list):
 
 
 def get_letter_guess(letter_guess_record, hidden_word):
-    letter_guess = input('Enter a letter to guess, or enter * for a clue >> \t').upper()
+    letter_guess = input('Enter a letter to guess, or enter * for a clue >> \n').upper()
+    print('letter guess = %s' % letter_guess)
     if letter_guess == '*':
         show_clue(hidden_word)
-        get_letter_guess(letter_guess_record, hidden_word)
+        letter_guess = get_letter_guess(letter_guess_record, hidden_word)
     elif letter_guess in letter_guess_record:
-        print('You have already guessed this letter. Please guess again!')
-        get_letter_guess(letter_guess_record, hidden_word)
+        print('You have already guessed %s. Please guess again!' % letter_guess)
+        letter_guess = get_letter_guess(letter_guess_record, hidden_word)
     return letter_guess
 
 
@@ -64,10 +63,10 @@ def show_clue(hidden_word):
         definition_tag = clue_page.select('span[class="rh_def"]')
         definition_text = definition_tag[0].get_text()
         print_clue_that_it_is_not_too_easy(definition_text)
-    except LookupError:
+    except:
         print('Unfortunately no clue is available. ' +
-              'Perhaps your device is not connected to mankind\'s central nervous system. ' +
-              'Alternatively there might not be a clue available for the word!\n')
+              'Perhaps your device is not connected to mankind\'s central nervous system.'
+              '\nAlternatively there might not be a clue available for the word!\n')
 
 
 def print_clue_that_it_is_not_too_easy(definition_text):
@@ -84,6 +83,7 @@ def create_letter_guess_records():
 
 
 def update_letter_guess_records(letter_guess, letter_guess_record, number_of_guesses_record):
+    #if letter_guess ==
     letter_guess_record.append(letter_guess)
     print('Letter guess record = {}'.format(str(letter_guess_record)))
     number_of_guesses_record += 1
@@ -259,6 +259,8 @@ def main_game_loop(is_game_finished, hidden_letter_and_marker_list,
                    hidden_word_length, hidden_word, letter_guess_record, number_of_guesses_record):
     while is_game_finished != True:
         letter_guess = get_letter_guess(letter_guess_record, hidden_word)
+        if letter_guess == None:
+            continue
         update_letter_guess_records(letter_guess, letter_guess_record, number_of_guesses_record)
         check_letter_guess_and_update(letter_guess, hidden_letter_and_marker_list)
         print_hidden_letter_and_marker_list(hidden_letter_and_marker_list)
