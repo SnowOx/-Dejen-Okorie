@@ -5,48 +5,45 @@ import requests
 import bs4
 import os
 
-DESIRED_SEARCH_TERM = "foxes"
-URL = 'https://unsplash.com/search/photos/' + str(DESIRED_SEARCH_TERM)
+DESIRED_SEARCH_TERM = str(input('Enter search term'))
+SEARCH_URL = 'https://unsplash.com/search/photos/' + str(DESIRED_SEARCH_TERM)
 
-# Tidy up the writing below, including the unclear names
 
-def download_page():
-    page_download = requests.get(URL)
-    page_download.raise_for_status()
-    print('Downloading %s' % URL)
-    page_soup = bs4.BeautifulSoup(page_download.text, "lxml")
+def get_page_soup(url):
+    requests_object = requests.get(url)
+    requests_object.raise_for_status()
+    print('Downloading %s' % url)
+    page_soup = bs4.BeautifulSoup(requests_object.text, "lxml")
     return page_soup
 
 
-def get_image_url_list(page_soup):
-    raw_links = page_soup.select('img[src]')
+def get_list_of_image_urls(soup_object):
+    raw_links = soup_object.select('img[src]')
     image_url_list = [item.get('src') for item in raw_links if '&w=1000' in item.get('src')] # Purifies list to give search images
-    image_url_list = list(set(image_url_list))
-    return image_url_list
+    list_of_discrete_image_urls = list(set(image_url_list))
+    return list_of_discrete_image_urls
 
 
-def write_images(image_url_list):
-    counter = 0
-    for image_url in image_url_list:
+def write_images(list_of_image_urls):
+    for counter, image_url in enumerate(list_of_image_urls):
         requests.get(image_url).raise_for_status()
-        request_url = requests.get(image_url).content
-        save_the_image(request_url,counter)
-        counter += 1
+        image_object = requests.get(image_url).content
+        save_the_image(image_object, counter)
 
         
-def save_the_image(request_url, counter):
-    os.makedirs('Search for ' + str(DESIRED_SEARCH_TERM) + ' images', exist_ok=True)
-    # Todo: modify to write new files into the newly created folder
-    image_file = open(str(DESIRED_SEARCH_TERM) + str(counter) + '.jpg', 'wb')
-    image_file.write(request_url)
-    image_file.close()
-    print('Writing %s ' % counter)
+def save_the_image(image_object_to_write_to_file, counter):
+    folder_path_to_save_images_into = os.path.join(os.path.getcwd(),  'Search for ' + str(DESIRED_SEARCH_TERM) + ' images')
+    os.makedirs(folder_path_to_save_images_into, exist_ok=True)
+    image_file_path = os.path.join(folder_path_to_save_images_into, str(DESIRED_SEARCH_TERM) + str(counter) + '.jpg')
+    with open(image_file_path, 'wb') as infile:
+        infile.write(url_to_be_downloaded)
+        infile.close()
+    print('Writing image %s ' % counter)
 
 
 # Engine
-page_soup = download_page()
-image_url_list = get_image_url_list(page_soup)
-print(image_url_list)
+page_soup = get_page_soup(SEARCH_URL)
+image_url_list = get_list_of_image_urls(page_soup)
 write_images(image_url_list)
 
-Solved! :)
+# Solved! :)
