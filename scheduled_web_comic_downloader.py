@@ -129,5 +129,6 @@ for comic_url in COMIC_BOOK_URLS:
         image_file = get_image_file(comic_image_url)
         image_filename = save_image_file(image_file)
         write_downloaded_comic_urls_to_record_of_comic_image_urls(comic_image_url, comic_url_text_file_database_path)
-
 print('Completed')
+
+# Solved! I also solved the task scheduler element.
