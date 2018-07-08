@@ -5,6 +5,11 @@
 # # Would like to create a GUI after I have completed the basic mechanics
 
 
+# There is a bug whereby, after a clue has ben given, the next guess is taken to be '*' rather than the entered guess letter
+# Solved the bug. I had been running the get_letter_guess function wihtout assigning its return value to
+# overwrite the letter_guess variable that had previously been assign to '*'
+
+
 import random
 import requests
 import bs4
@@ -62,14 +67,14 @@ def show_clue(hidden_word):
         clue_page = bs4.BeautifulSoup(clue_page_request.text, "lxml")
         definition_tag = clue_page.select('span[class="rh_def"]')
         definition_text = definition_tag[0].get_text()
-        print_clue_that_it_is_not_too_easy(definition_text)
+        print_clue_that_is_not_too_easy(definition_text)
     except:
         print('Unfortunately no clue is available. ' +
               'Perhaps your device is not connected to mankind\'s central nervous system.'
               '\nAlternatively there might not be a clue available for the word!\n')
 
 
-def print_clue_that_it_is_not_too_easy(definition_text):
+def print_clue_that_is_not_too_easy(definition_text):
     separator_to_avoid_giving_a_clue_that_is_too_easy = ':'
     definition_text_without_an_easy_clue = definition_text.split(
         separator_to_avoid_giving_a_clue_that_is_too_easy, 1)[0]
@@ -78,16 +83,19 @@ def print_clue_that_it_is_not_too_easy(definition_text):
 
 def create_letter_guess_records():
     letter_guess_record = []
-    number_of_guesses_record = 0
+    number_of_guesses_record = 0 # create new function that records the number of incorrect guesses
     return (letter_guess_record, number_of_guesses_record)
 
 
 def update_letter_guess_records(letter_guess, letter_guess_record, number_of_guesses_record):
-    #if letter_guess ==
     letter_guess_record.append(letter_guess)
     print('Letter guess record = {}'.format(str(letter_guess_record)))
-    number_of_guesses_record += 1
+    number_of_guesses_record = len(letter_guess_record)
+    print('number of guesses record = {}'.format(str(number_of_guesses_record)))
+    print_hangman_image_based_on_number_of_guesses(number_of_guesses_record) # Move this function outside of the update..function
     return (letter_guess_record, number_of_guesses_record)
+
+
 
 
 str_image_16 = [
@@ -194,6 +202,10 @@ str_images = [str_image_16, str_image_15, str_image_14, str_image_13, str_image_
               str_image_11, str_image_10, str_image_9, str_image_8]
 
 
+def print_hangman_image_based_on_number_of_guesses(number_of_guesses):
+    assert type(number_of_guesses) == int
+    for line in str_images[number_of_guesses]:
+        print(line)
 
 
 def check_letter_guess_and_update(letter_guess, hidden_letter_and_marker_list):
@@ -204,15 +216,27 @@ def check_letter_guess_and_update(letter_guess, hidden_letter_and_marker_list):
                 if k == letter_guess:
                     letter_and_marker_pair[k] = 1
                     correct_or_incorrect_guess_counter += 1
-        show_correct_or_incorrect_message_for_the_guess(correct_or_incorrect_guess_counter, letter_guess)
+        return correct_or_incorrect_guess_counter
 
 
-def show_correct_or_incorrect_message_for_the_guess(correct_or_incorrect_guess_counter, letter_guess):
-
+def print_message_and_get_value_of_true_if_the_most_recent_guess_is_correct(correct_or_incorrect_guess_counter, letter_guess):
     if correct_or_incorrect_guess_counter > 0:
         print('Correct! The letter %s appears in the word' % letter_guess)
+        is_most_recent_guess_correct = True
+        return is_the_most_recent_guess_correct
     else:
         print('Incorrect! The letter %s does not appear in the word' % letter_guess)
+        is_most_recent_guess_correct = False
+        return is_the_most_recent_guess_correct
+
+
+def get_value_of_true_if_the_most_recent_guess_is_correct(correct_or_incorrect_guess_counter):
+    if correct_or_incorrect_guess_counter > 0:
+        is_the_most_recent_guess_correct = True
+        return is_the_most_recent_guess_correct
+    else:
+        is_the_most_recent_guess_correct = False
+        return is_the_most_recent_guess_correct
 
 
 def check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length, letter_guess, hidden_word):
@@ -262,7 +286,9 @@ def main_game_loop(is_game_finished, hidden_letter_and_marker_list,
         if letter_guess == None:
             continue
         update_letter_guess_records(letter_guess, letter_guess_record, number_of_guesses_record)
-        check_letter_guess_and_update(letter_guess, hidden_letter_and_marker_list)
+        correct_or_incorrect_guess_counter = check_letter_guess_and_update(letter_guess, hidden_letter_and_marker_list)
+        is_the_most_recent_guess_correct = print_message_and_get_value_of_true_if_the_most_recent_guess_is_correct(
+            correct_or_incorrect_guess_counter, letter_guess)
         print_hidden_letter_and_marker_list(hidden_letter_and_marker_list)
         is_game_finished = check_whether_game_complete(hidden_letter_and_marker_list, hidden_word_length,
                                                        letter_guess, hidden_word)
