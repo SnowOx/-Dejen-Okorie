@@ -1,0 +1,57 @@
+#! python3
+# custom_seating_cards.py
+
+import os
+from PIL import Image, ImageDraw
+import requests
+from bs4 import BeautifulSoup
+
+GUESTS_PATH = '#'
+DECORATIVE_FLOWERS = '#'
+
+def get_guests():
+    with open(GUESTS_PATH, 'r') as infile:
+        guests = [guest for guest in infile.readlines()]
+        guests = filter('/n', guests)
+        print(guests)
+        return guests
+
+
+def create_white_background_image(width, height):
+    white_background = Image.new('RGBA', (width, height), 'white')
+    return white_background
+
+
+
+
+
+
+# def add_guest_specific_image(guest, seating_card_image):
+#     get_page_soup(url)
+#
+#
+#
+#
+def add_flowery_decoration(image_target):
+    flower_image = Image.open(DECORATIVE_FLOWERS)
+    with Image.open(image_target) as infile:
+        infile.paste(flower_image, (0, 0), flower_image)
+        return infile
+#
+#
+#
+#
+# def add_guest_name(guest):
+#
+#
+#
+# def add_black_rectange(seating_card_image):
+
+
+guests = get_guests()
+image = create_white_background_image(800, 800)
+image = add_flowery_decoration(image)
+
+
+
+image.save('test.png')
