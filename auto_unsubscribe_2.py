@@ -6,12 +6,17 @@ import pyzmail
 import pprint
 import re
 from bs4 import BeautifulSoup
+from selenium import webdriver
 
-# I am enjoying using the interspersed definition-operation style below. I have found that the id-o style to improve my 
+
+# I am enjoying using the interspersed definition-operation style below. I have found that the id-o style to improve my
 # understanding and testing of the Py that I write.
 
+#EMAIL_ADDRESS = input('email >> ')
 EMAIL_ADDRESS = '#'
+#PASSWORD = input('password >> ')
 PASSWORD = '#'
+
 
 imap_object = imapclient.IMAPClient('imap.gmail.com', ssl=True)
 imap_object.login(EMAIL_ADDRESS, PASSWORD)
@@ -34,27 +39,45 @@ def get_message_html(UID_codes):
 
 
 all_message_html = get_message_html(UID_codes)
-pprint.pprint(all_message_html)
+#pprint.pprint(all_message_html)
 
 
 def filter_for_unsubscribe_links(href):
-    return href and re.compile('unsubscribe').search(href)
-    return href and re.compile('remove').search(href)
-    return href and re.compile('out').search(href)
+
+    return href and re.compile('unsubscribe').search(str(href))
+    # return href and re.compile('remove').search(href)
+    # return href and re.compile('out').search(href)
+
 
 
 def get_unsubscribe_links(html_list):
     unsubscribe_links = []
     for element in html_list:
+        #print('element = %s' % element)
         soup = BeautifulSoup(element, 'lxml')
-        filtered_links = soup.find_all(href=filter_for_unsubscribe_links)
-        unsubscribe_links.append(filtered_links)
+        for result in soup.find_all(string=re.compile('unsubscribe')): # Getting closer. Purify result.
+            if 'http' in result:
+                unsubscribe_links.append(result)
+        print('href links = %s' % unsubscribe_links)
         print('Done')
     print(unsubscribe_links)
+    return unsubscribe_links
 
 
-get_unsubscribe_links(all_message_html)
-# Working. Get only links
+unsubscribe_links = get_unsubscribe_links(all_message_html)
 
 
+def open_unsubscribe_link(url):
+    driver = webdriver.Firefox()
+    driver.get(url)
+
+
+def open_unsubscribe_links_if_wanted():
+    for link in unsubscribe_links:
+        answer = input('The link is for %s.\nEnter \'n\' not to open the unsubscribe link' % link)
+        if answer != 'n':
+            open_unsubscribe_link(link)
+
+
+#open_unsubscribe_links_if_wanted()
 print('Done')
