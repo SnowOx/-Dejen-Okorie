@@ -42,21 +42,12 @@ all_message_html = get_message_html(UID_codes)
 #pprint.pprint(all_message_html)
 
 
-def filter_for_unsubscribe_links(href):
-
-    return href and re.compile('unsubscribe').search(str(href))
-    # return href and re.compile('remove').search(href)
-    # return href and re.compile('out').search(href)
-
-
-
 def get_unsubscribe_links(html_list):
     unsubscribe_links = []
     for element in html_list:
         #print('element = %s' % element)
         soup = BeautifulSoup(element, 'lxml')
-        for result in soup.find_all(string=re.compile('unsubscribe')): # Getting closer. Purify result.
-            if 'http' in result:
+        for result in soup.find_all(href=True, string=re.compile('unsubscribe')): # Getting closer. Purify result.
                 unsubscribe_links.append(result)
         print('href links = %s' % unsubscribe_links)
         print('Done')
