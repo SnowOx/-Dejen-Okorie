@@ -4,7 +4,7 @@
 import pyautogui
 import time
 
-def nudge_mouse()
+def nudge_mouse():
     pyautogui.moveRel(10,10)
 
 def time_delay(seconds)
