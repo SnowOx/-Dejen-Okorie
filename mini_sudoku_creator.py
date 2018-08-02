@@ -3,19 +3,36 @@
 
 import random
 import pprint
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
-def create_grid(number_of_rows):
+GRID_SIDE_LENGTH = 3
+
+def create_grid():
     grid_rows = []
-    for i in range(number_of_rows):
-        blank_row = ['' for j in range(number_of_rows)]
+    for i in range(GRID_SIDE_LENGTH):
+        blank_row = ['x' for j in range(GRID_SIDE_LENGTH)]
         grid_rows.append(blank_row)
     return grid_rows
 
-number_of_rows = 5
 
-# Todo: Create definition to define seed starting number positions
+def get_cell_value_that_fits(row_values, column_values):
+    for row, column in zip(row_values, column_values):
+        logging.info(f'row = {row} column = {column}')
+        possible_cell_values = get_possible_cells()
+        if row in possible_cell_values:
+            possible_cell_values.remove(row)
+        if column in possible_cell_values:
+            possible_cell_values.remove(column)
+        value = choose_random_number(possible_cell_values)
+        #print(f'randomly chosen number = {value}')
+        return value
 
 
+def get_possible_cells():
+    cells = [i for i in range(GRID_SIDE_LENGTH)]
+    logging.info(f'possible_cells = {cells}')
+    return cells
 
 
 def choose_random_number(array):
@@ -23,56 +40,49 @@ def choose_random_number(array):
     return number
 
 
-def get_possible_row_values(row):
-    possible_row_values = [i for i in range(number_of_rows)]
-    invalid_values = [value for value in possible_row_values if value in row]
-    for element in invalid_values:
-        possible_row_values.remove(element)
-    return possible_row_values
-
-# might be much simpler to use two lists of lists to represent the rows and columns
-
-def insert_value_into_blank_cells(grid):
+def get_row_values(grid):
+    rows = []
     for row in grid:
-        possible_row_values = get_possible_row_values(row) # Todo: edit this to improve readability. It is difficult to read
+        #print(f'row = {row}')
+        row_values = []
         for cell in row:
+            row_values.append(cell)
+    return rows
+
+
+def get_column_values(grid):
+    columns = []
+    for i in range(len(grid)):
+        column_values = []
+        for j in range(len(grid)):
+            cell = grid[j][i]
+            print(f'59 cell = {cell}')
+            column_values.append(cell)
+        columns.append(column_values)
+    #print(f'columns = {columns}')
+    return columns
+
+
+def insert_numbers_into_grid(grid):
+    for row in grid:
+        print(f'67 row = {row}')
+        for cell in row:
+            print(f'69 cell = {cell}')
+            row_values = get_row_values(grid)
+            logging.info(f'row values = {row_values}')
+            column_values = get_column_values(grid)
+            logging.info(f'column_values = {column_values}')
+            cell_value = get_cell_value_that_fits(row_values, column_values)
+            logging.info(f'cell_value = {cell_value}')
             cell_position = row.index(cell)
-            print(f'value position = {cell_position}')
-            if cell is not int:
-                chosen_number = get_number_that_is_not_in_the_same_column(possible_row_values, cell_position) # This is inelegant. Todo: Tidy.
-                row[cell_position] = chosen_number
-                possible_row_values.remove(row[cell_position])
-                print (f'assigned row value = {row[cell_position]}')
-                column_data['cell_position'] = chosen_number
-            else:
-                print('Value already inserted')
+            row[cell_position] = cell_value
 
 
-def get_number_that_is_not_in_the_same_column(possible_row_values, cell_position):
-    column_elements = []
-    print(cell_position)
-    for k, v in column_data.items(): # Find a simpler way to do this without randomness and recursion. E.g., build temporay list?
-        if k == cell_position:
-            column_elements.append(v)
-    possible_cell_values = set(column_elements) - set(possible_row_values)
-    number = random.choice(possible_cell_values)
-    return number
+def engine():
+    grid = create_grid()
+    logging.info(f' grid = {grid}')
+    insert_numbers_into_grid(grid)
+    print(f' end grid = {grid}')
 
 
-
-
-# Must amalagate get column and row check
-
-
-
-
-
-# Engine
-
-grid = create_grid(number_of_rows)
-pprint.pprint(grid)
-column_data = {9: 9} # column number[value]
-insert_value_into_blank_cells(grid)
-pprint.pprint(grid)
-
-
+engine()
