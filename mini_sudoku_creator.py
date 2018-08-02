@@ -62,7 +62,7 @@ def get_column_values(grid):
     #print(f'columns = {columns}')
     return columns
 
-
+ 
 def insert_numbers_into_grid(grid):
     for row in grid:
         print(f'67 row = {row}')
